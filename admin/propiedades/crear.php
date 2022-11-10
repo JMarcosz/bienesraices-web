@@ -1,5 +1,6 @@
 <?php
-//Importo la conexión de la bases de datos
+require '../../includes/funciones.php';
+sesionUsuario();
 require '../../includes/config/database.php';
 $db = conectarDB();
 
@@ -38,13 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // echo "</pre>";
     // exit;
 
-    $titulo =  mysqli_real_escape_string( $db,$_POST["titulo"] ) ; //mysqli_real_escape_string sanitiza la información, y necesita dos parámetros, db y la información
-    $precio = mysqli_real_escape_string( $db,$_POST["precio"] ) ;
-    $descripcion = mysqli_real_escape_string( $db,$_POST["descripcion"] ) ;
-    $habitaciones = mysqli_real_escape_string( $db,$_POST["habitaciones"] ) ;
-    $wc = mysqli_real_escape_string( $db,$_POST["wc"] ) ;
-    $estacionamiento = mysqli_real_escape_string( $db,$_POST["estacionamiento"] ) ;
-    $vendedorId = mysqli_real_escape_string( $db,$_POST["vendedor"] ) ;
+    $titulo =  mysqli_real_escape_string($db, $_POST["titulo"]); //mysqli_real_escape_string sanitiza la información, y necesita dos parámetros, db y la información
+    $precio = mysqli_real_escape_string($db, $_POST["precio"]);
+    $descripcion = mysqli_real_escape_string($db, $_POST["descripcion"]);
+    $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
+    $wc = mysqli_real_escape_string($db, $_POST["wc"]);
+    $estacionamiento = mysqli_real_escape_string($db, $_POST["estacionamiento"]);
+    $vendedorId = mysqli_real_escape_string($db, $_POST["vendedor"]);
     $imagen = $_FILES["imagen"];
 
     //Validación del formulario
@@ -76,13 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "Elige un vendedor";
     }
 
-    if (!$imagen || $imagen["error"]){
+    if (!$imagen || $imagen["error"]) {
         $errores[] = "La imagen es obligatoria";
     }
 
     //Validad por tamaño
     $medida = 1000 * 1000;
-    if ($imagen["size"] > $medida){
+    if ($imagen["size"] > $medida) {
         $errores[] = "La imagen es muy pesada, debe ser menor a 1MB";
     }
 
@@ -100,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         //Dividimos type en un array para concatenar la extension
         $extension = explode("/", $imagenType);
         //Generar un nombre único con su extension
-        $nombreImagen = md5(uniqid(rand(), true)) . "." . $extension[1];    
+        $nombreImagen = md5(uniqid(rand(), true)) . "." . $extension[1];
 
         //Queries para insertar en la base de datos
         $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) 
@@ -121,7 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
@@ -130,12 +130,12 @@ incluirTemplate('header');
     <a href="/admin" class="boton boton-verde">Volver</a>
 
     <!--Mostrar errores -->
-    <?php foreach($errores as $error): ?>
+    <?php foreach ($errores as $error) : ?>
         <div class="alerta error">
-        <?php echo $error; ?>
+            <?php echo $error; ?>
         </div>
-    <?php endforeach?>
-    
+    <?php endforeach ?>
+
     <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
         <fieldset>
             <legend>Información General</legend>
@@ -168,7 +168,7 @@ incluirTemplate('header');
             <legend>Vendedor</legend>
             <select name="vendedor">
                 <option value="">--Seleccione un vendedor</option>
-                <?php while($vendedor = mysqli_fetch_assoc($resultado)): ?> //Devuelve información en array
+                <?php while ($vendedor = mysqli_fetch_assoc($resultado)) : ?> //Devuelve información en array
                     <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : '' ?> value="<?php echo $vendedor['id'] ?>"> <?php echo $vendedor['nombre'] . " " . $vendedor['apellido'] ?> </option>
                 <?php endwhile ?>
             </select>

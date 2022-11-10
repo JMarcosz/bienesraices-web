@@ -1,13 +1,15 @@
 <?php
+require '../../includes/funciones.php';
+sesionUsuario();
+require '../../includes/config/database.php';
+$db = conectarDB();
+
 //Validar ID
 $id = $_GET["id"];
 $id = filter_var($id, FILTER_VALIDATE_INT);
 if (!$id) {
   header('Location: /admin');
 }
-//Importo la conexión de la bases de datos
-require '../../includes/config/database.php';
-$db = conectarDB();
 
 //Obtener resultados
 $consulta = " SELECT * FROM propiedades WHERE id= ${id}; ";
@@ -119,8 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
   }
 }
-
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 

@@ -9,15 +9,15 @@ $resultado = mysqli_query($db, $query);
 
 
 <div class="contenedor-anuncios">
-    <?php while($propiedad = mysqli_fetch_assoc($resultado)): ?>
+  <?php while ($propiedad = mysqli_fetch_assoc($resultado)) : ?>
     <div class="anuncio">
-        <img loading="lazy" width="300" height="200" src="/imagenes/<?php echo $propiedad["imagen"] ?>" alt="Anuncio 3" />
+      <img loading="lazy" width="300" height="200" src="/imagenes/<?php echo $propiedad["imagen"] ?>" alt="Anuncio 3" />
       <div class="contenido-anuncio">
         <h3><?php echo $propiedad["titulo"] ?></h3>
         <p>
-        <?php echo $propiedad["descripcion"] ?>
+          <?php echo $propiedad["descripcion"] ?>
         </p>
-        <p class="precio">$<?php echo number_format($propiedad["precio"],2); ?></p>
+        <p class="precio">$<?php echo number_format($propiedad["precio"], 2); ?></p>
         <ul class="iconos-caracteristicas">
           <li>
             <img loading="lazy" width="300" height="200" class="icono" src="build/img/icono_wc.svg" alt="icono wc" />
@@ -40,6 +40,6 @@ $resultado = mysqli_query($db, $query);
       <!-- Contenido anuncio -->
     </div>
     <!-- Anuncio -->
-    <?php endwhile; ?>
-  </div>
-  <!-- contenedor de anuncios -->
+  <?php endwhile; ?>
+</div>
+<!-- contenedor de anuncios -->

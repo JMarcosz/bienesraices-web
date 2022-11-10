@@ -53,7 +53,7 @@ function navegacionResponsive(){
 }
 
 function borraMensaje() {
-    const mensajeConfirm = document.querySelector('.alerta');
+    const mensajeConfirm = document.querySelector('.ocultar');
     if(mensajeConfirm !== null){
         setTimeout(function() {
             const padre = mensajeConfirm.parentElement;
