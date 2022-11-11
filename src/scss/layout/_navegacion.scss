@@ -1,110 +1,96 @@
-.barra{
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    position: relative;
-    @include tablet {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+.bar-header{
+  padding: 2rem 0;
 }
 
-.barra-mobile{
+.inicio {
+  .bar-nav {
+    height: 35rem;
+    @include tablet {
+      height: auto;
+    }
+  }
+}
+
+.tools {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+
+  img {
+    display: block;
+    width: 4rem;
+    margin-right: 2rem;
+    cursor: pointer;
+  }
+
+  img:last-of-type {
+    margin: 0;
+  }
+  .menu-hamburguesa {
+    display: block;
+    @include tablet {
+      display: none;
+    }
+  }
+  .dark-boton {
+    filter: invert(100%);
+  }
+}
+
+.bar-nav {
+  img {
+    display: block;
+    max-width: 35rem;
+    margin: 0 auto;
+  }
+
+  @include tablet {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 5rem;
-    @include tablet{
-        margin-bottom: 0;
-    }
+  }
 }
 
-.mobile-menu{
-    img{
-        max-width: 4rem;
-    }
-    @include tablet{
-        display: none;
-        visibility: visible;
-        opacity: 1;
-    }
-}
-
-.inicio{
-    .dark-option{
-        height: 25rem;
-        @include tablet{
-            height: auto;
-        }
-    }
-}
-.navegacion {
-    height: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.4s linear, opacity 0.4s linear, height .4s linear;
-    overflow: hidden;
+.nav {
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.4s linear, opacity 0.4s linear, height 0.4s linear;
+  overflow: hidden;
+  a {
+    color: $blanco;
+    text-decoration: none;
+    font-size: 2.2rem;
+    display: block;
+    text-align: center;
+    padding: 1rem 0;
     @include tablet {
-        display: flex;
-        align-items: center;
-        visibility: visible;
-        opacity: 1;
-        height: auto;
-    }
-    a {
-        color: $blanco;
-        text-decoration: none;
-        font-size: 2.2rem;
-        display: block;
-        text-align: center;
-        padding: 1rem 0;
-        @include tablet {
-            margin-right: 2rem;
-            padding: 0;
-            &:last-of-type{
-                margin-right: 0;
-            }
-        }
-
-        &:hover{
-            color: $verde;
-        }
+      display: inline-block;
+      margin-right: 2rem;
+      padding: 0;
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
 
+    &:hover {
+      color: $verde;
+    }
+  }
 
-}
-
-
-.mostrar{
+  @include tablet {
+    display: flex;
+    justify-content: flex-end;
     visibility: visible;
     opacity: 1;
-    height: 25rem;
-    @include tablet{
-       height: auto 
-    }
+    height: auto;
+  }
 }
 
-.dark-option{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @include tablet{
-        align-items: flex-end;
-    }
-    .dark-mode-boton{
-        position: absolute;
-        width: 3rem;
-        top: 9rem;
-        right: 2rem;
-        filter: invert(100%);
-        &:hover{
-            cursor: pointer;
-        }
-        @include tablet{
-            position: static;
-            margin-bottom: 2rem;
-        }
-    }
-
-
+.mostrar {
+  visibility: visible;
+  opacity: 1;
+  height: 25rem;
+  @include tablet {
+    height: auto;
+  }
 }

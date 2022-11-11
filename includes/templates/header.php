@@ -23,31 +23,28 @@ $auth = $_SESSION['login'] ?? false;
 <body>
     <header class="header <?php echo $inicio ? 'inicio' : '' ?>">
         <div class="contenedor contenido-header">
-            <div class="barra">
-                <div class="barra-mobile">
-                    <a href="/">
-                        <img loading="lazy" width="300" height="200" src="/build/img/logo.svg" alt="Logo tipo de vienes raíces" />
-                    </a>
+            <div class="bar-header">
+                <div class="tools">
+                    <img class="dark-boton" src="/build/img/dark-mode.svg" alt="Boton-Tema">
+                    <img class="menu-hamburguesa" src="/build/img/barras.svg" alt="Boton-menu">
 
-                    <div class="mobile-menu">
-                        <img loading="lazy" width="300" height="200" src="/build/img/barras.svg" alt="menu">
-                    </div>
                 </div>
-                <div class="dark-option">
-                    <img loading="lazy" width="300" height="200" class="dark-mode-boton" src="/build/img/dark-mode.svg" alt="Cambiar Tema">
-                    <nav class="navegacion">
-                        <a href="nosotros.php">Nosotros</a>
+                <div class="bar-nav">
+                    <a href="/">
+                        <img src="/build/img/logo.svg" alt="Imagen-Logo">
+                    </a>
+                    <div class="nav">
                         <a href="anuncios.php">Anuncios</a>
-                        <a href="blog.php">Blog</a>
+                        <a href="nosotros.php">Nosotros</a>
                         <a href="contacto.php">Contacto</a>
                         <?php if ($auth) : ?>
                             <a href="cerrar-sesion.php">Cerrar Sesión</a>
                         <?php else : ?>
                             <a href="login.php">Iniciar Sesión</a>
                         <?php endif ?>
-                    </nav>
+                    </div>
                 </div>
-            </div> <!-- Cierre de la barra -->
+            </div>
             <?php echo $inicio ? '<h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>' : ''; ?>
         </div>
 

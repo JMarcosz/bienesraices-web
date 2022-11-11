@@ -1,6 +1,5 @@
 .boton-amarillo-block{
     @include boton($amarillo, block);
-    height: 5rem
 }
 .boton-amarillo{
     @include boton($amarillo, inline-block);

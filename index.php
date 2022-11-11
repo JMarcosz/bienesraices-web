@@ -50,7 +50,7 @@ incluirTemplate('header', true);
   ?>
 
   <div class="alinear-derecha">
-    <a href="anuncios.php" class="boton-verde">Ver Propiedad</a>
+    <a href="anuncios.php" class="boton-verde">Ver Todas</a>
   </div>
 </section>
 
