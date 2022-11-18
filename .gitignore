@@ -1,6 +1,5 @@
 /node_modules
 /.vscode
 /cspell.json
-/.gitignore
 /package-lock.json
 /vendor/
