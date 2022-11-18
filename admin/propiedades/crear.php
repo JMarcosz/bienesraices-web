@@ -30,7 +30,6 @@ $imagen = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $propiedad = new Propiedad($_POST);
     $propiedad->guardar();
-    debuguear($propiedad);
 
     $titulo =  mysqli_real_escape_string($db, $_POST["titulo"]); //mysqli_real_escape_string sanitiza la información, y necesita dos parámetros, db y la información
     $precio = mysqli_real_escape_string($db, $_POST["precio"]);
@@ -45,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!$titulo) {
         $errores[] = "Debes añadir un titulo";
     }
-
+ 
     if (!$precio) {
         $errores[] = "El precio es obligatorio";
     }
