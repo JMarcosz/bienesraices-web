@@ -1,7 +1,7 @@
 <?php
-require '../../includes/funciones.php';
+require '../../includes/app.php';
+use App\Propiedad;
 sesionUsuario();
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 
@@ -28,16 +28,9 @@ $imagen = "";
 // ----Ejecuto el código después que se envíe el formulario----
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    //Los archivos no se guardan en la super global post, sino en la super global files
-    // echo "<pre>";
-    // var_dump($_FILES);
-    // echo "</pre>";
-
-    //almaceno la información que están en las variables globales del post
-    // echo "<pre>";
-    // var_dump($_POST);
-    // echo "</pre>";
-    // exit;
+    $propiedad = new Propiedad($_POST);
+    $propiedad->guardar();
+    debuguear($propiedad);
 
     $titulo =  mysqli_real_escape_string($db, $_POST["titulo"]); //mysqli_real_escape_string sanitiza la información, y necesita dos parámetros, db y la información
     $precio = mysqli_real_escape_string($db, $_POST["precio"]);
@@ -45,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
     $wc = mysqli_real_escape_string($db, $_POST["wc"]);
     $estacionamiento = mysqli_real_escape_string($db, $_POST["estacionamiento"]);
-    $vendedorId = mysqli_real_escape_string($db, $_POST["vendedor"]);
+    $vendedorId = mysqli_real_escape_string($db, $_POST["vendedorId"]);
     $imagen = $_FILES["imagen"];
 
     //Validación del formulario
@@ -166,7 +159,7 @@ incluirTemplate('header');
 
         <fieldset>
             <legend>Vendedor</legend>
-            <select name="vendedor">
+            <select name="vendedorId">
                 <option value="">--Seleccione un vendedor</option>
                 <?php while ($vendedor = mysqli_fetch_assoc($resultado)) : ?> //Devuelve información en array
                     <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : '' ?> value="<?php echo $vendedor['id'] ?>"> <?php echo $vendedor['nombre'] . " " . $vendedor['apellido'] ?> </option>

@@ -1,7 +1,6 @@
 <?php
-require '../../includes/funciones.php';
+require '../../includes/app.php';
 sesionUsuario();
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 //Validar ID

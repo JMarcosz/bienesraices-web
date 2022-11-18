@@ -1,9 +1,8 @@
 <?php
-require 'includes/funciones.php';
+require 'includes/app.php';
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
 
-require "includes/config/database.php";
 $db = conectarDB();
 $query = " SELECT * FROM propiedades where id = ${id}";
 $resultado = mysqli_query($db, $query);

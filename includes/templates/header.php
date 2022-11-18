@@ -33,16 +33,16 @@ $auth = $_SESSION['login'] ?? false;
                     <a href="/">
                         <img src="/build/img/logo.svg" alt="Imagen-Logo">
                     </a>
-                    <div class="nav">
-                        <a href="anuncios.php">Anuncios</a>
-                        <a href="nosotros.php">Nosotros</a>
-                        <a href="contacto.php">Contacto</a>
+                    <nav class="nav">
+                        <a href="/anuncios.php">Anuncios</a>
+                        <a href="/nosotros.php">Nosotros</a>
+                        <a href="/contacto.php">Contacto</a>
                         <?php if ($auth) : ?>
-                            <a href="cerrar-sesion.php">Cerrar Sesión</a>
+                            <a href="/cerrar-sesion.php">Cerrar Sesión</a>
                         <?php else : ?>
-                            <a href="login.php">Iniciar Sesión</a>
+                            <a href="/login.php">Iniciar Sesión</a>
                         <?php endif ?>
-                    </div>
+                        </nav>
                 </div>
             </div>
             <?php echo $inicio ? '<h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>' : ''; ?>

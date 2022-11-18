@@ -1,6 +1,4 @@
 <?php
-
-require "includes/config/database.php";
 $db = conectarDB();
 $query = " SELECT * FROM propiedades LIMIT ${limite}; ";
 $resultado = mysqli_query($db, $query);
