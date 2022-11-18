@@ -31,13 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $propiedad = new Propiedad($_POST);
     $propiedad->guardar();
 
-    $titulo =  mysqli_real_escape_string($db, $_POST["titulo"]); //mysqli_real_escape_string sanitiza la información, y necesita dos parámetros, db y la información
-    $precio = mysqli_real_escape_string($db, $_POST["precio"]);
-    $descripcion = mysqli_real_escape_string($db, $_POST["descripcion"]);
-    $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
-    $wc = mysqli_real_escape_string($db, $_POST["wc"]);
-    $estacionamiento = mysqli_real_escape_string($db, $_POST["estacionamiento"]);
-    $vendedorId = mysqli_real_escape_string($db, $_POST["vendedorId"]);
     $imagen = $_FILES["imagen"];
 
     //Validación del formulario
