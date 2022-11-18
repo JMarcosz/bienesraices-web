@@ -14,3 +14,5 @@ $query = " INSERT INTO usuarios(email, password) VALUES ('${email}', '{$password
 //Agregarlo a la base de datos
 
 mysqli_query($db, $query);
+var_dump($db);
+
