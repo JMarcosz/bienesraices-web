@@ -42,28 +42,29 @@ class Propiedad
     {
         //Sanitizar atributos
         $atributos = $this->sanitizarAtributos();
+        $columna = join(', ', array_keys($atributos));
+        $fila = join("', '", array_values($atributos));
 
-        $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) 
-        values('$this->titulo', '$this->precio', '$this->imagen', '$this->descripcion', '$this->habitaciones', '$this->wc', '$this->estacionamiento', '$this->creado', '$this->vendedorId'); ";
 
+        $query = " INSERT INTO propiedades ($columna) values('$fila'); ";
         $resultado = self::$db->query($query);
-        debuguear($resultado);
     }
 
-    public function atributos(){
+    public function atributos()
+    {
         $atributos = [];
-        foreach (self::$columnasDB as $columna){
-            if($columna == 'id') continue;
+        foreach (self::$columnasDB as $columna) {
+            if ($columna == 'id') continue;
             $atributos[$columna] = $this->$columna;
         }
 
         return $atributos;
     }
 
-    public function sanitizarAtributos(){
+    public function sanitizarAtributos()
+    {
         $atributos = $this->atributos();
-
-        foreach ($atributos as $key => $value){
+        foreach ($atributos as $key => $value) {
             $atributos[$key] = self::$db->escape_string($value);
         }
         return ($atributos);
