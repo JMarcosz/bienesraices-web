@@ -98,13 +98,14 @@ class Propiedad
         if (!$this->imagen) {
             self::$errores[] = "La imagen es obligatoria";
         }
-        
-        return self:: $errores;
+
+        return self::$errores;
     }
 
     //Subir Imagenes
-    public function setImagen($imagen){
-        if($imagen){
+    public function setImagen($imagen)
+    {
+        if ($imagen) {
             $this->imagen = $imagen;
         }
     }
@@ -118,5 +119,19 @@ class Propiedad
         $query = " INSERT INTO propiedades ($columna) values('$fila'); ";
         $resultado = self::$db->query($query);
         return $resultado;
+    }
+
+    public static function viewAll()
+    {
+        $query = "SELECT * FROM propiedades";
+        $resultado = self::$db->query($query);
+
+        $array = [];
+        while ($registro = $resultado->fetch_assoc()) {
+            $objecto = (object)$registro;
+            $array[] = $objecto;
+        }
+        $resultado->free();
+        return $array;
     }
 }

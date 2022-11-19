@@ -3,6 +3,7 @@ require '../../includes/app.php';
 
 use App\Propiedad;
 use Intervention\Image\ImageManagerStatic as Image;
+
 sesionUsuario();
 $db = conectarDB();
 
@@ -31,14 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $propiedad = new Propiedad($_POST);
 
     $imagen = $_FILES['imagen'];
-    //Guardamos el tipo
-    $imagenType = $imagen["type"];
-    //Dividimos type en un array para concatenar la extension
-    $extension = explode("/", $imagenType);
-    //Generar un nombre único con su extension
-    $nombreImagen = md5(uniqid(rand(), true)) . "." . $extension[1];
 
-    if ($_FILES['imagen']['tmp_name']) {
+    if ($imagen['tmp_name']) {
+        //Guardamos el tipo
+        $imagenType = $imagen["type"];
+        //Dividimos type en un array para concatenar la extension
+        $extension = explode("/", $imagenType);
+        //Generar un nombre único con su extension
+        $nombreImagen = md5(uniqid(rand(), true)) . "." . $extension[1];
         //Realizar rezize a la img con intervention
         $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
         $propiedad->setImagen($nombreImagen);
@@ -59,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $image->save(CARPETA_IMAGENES . $nombreImagen);
             header('Location: /admin?resultado=1');
-
         } catch (Throwable $ex) {
             echo 'No se pudo insertar los datos. Error : ' . $ex->getMessage() . '<br>' . ' Código: ' . $ex->getCode();
             exit;

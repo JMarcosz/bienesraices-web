@@ -1,14 +1,13 @@
 <?php
+
+use App\Propiedad;
+
 require '../includes/app.php';
 sesionUsuario();
 $db = conectarDB();
 
-
-//Escribimos el query
-$query = " SELECT * FROM propiedades; ";
-
-//COnsulta
-$resultadoConsulta = mysqli_query($db, $query);
+//Implementar metodo para obtener propiedades
+$propiedades = Propiedad::viewAll();
 $resultado =  $_GET['resultado'] ?? null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -54,21 +53,21 @@ incluirTemplate('header');
       </tr>
     </thead>
     <tbody>
-      <?php while ($propiedad = mysqli_fetch_assoc($resultadoConsulta)) : ?>
+      <?php foreach($propiedades as $propiedad) : ?>
         <tr>
-          <td><?php echo $propiedad["id"]; ?></td>
-          <td><?php echo $propiedad["titulo"]; ?></td>
-          <td><img class="imagen-propiedades" src="/imagenes/<?php echo $propiedad["imagen"]; ?>" alt="Casa en ola playa"></td>
-          <td><?php echo number_format($propiedad["precio"], 2); ?></td>
+          <td><?php echo $propiedad->id; ?></td>
+          <td><?php echo $propiedad->titulo; ?></td>
+          <td><img class="imagen-propiedades" src="/imagenes/<?php echo $propiedad->imagen; ?>" alt="Casa en ola playa"></td>
+          <td><?php echo number_format($propiedad->precio, 2); ?></td>
           <td class="columns">
             <form method="POST" class="w-100">
-              <input type="hidden" name="id" value="<?php echo $propiedad["id"] ?>">
+              <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
               <input class="boton-rojo-block" type="submit" value="Eliminar">
             </form>
-            <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad["id"]; ?>" class="boton-amarillo-block">Actualizar</a>
+            <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad->id; ?>" class="boton-amarillo-block">Actualizar</a>
           </td>
         </tr>
-      <?php endwhile; ?>
+      <?php endforeach; ?>
     </tbody>
   </table>
 </main>
