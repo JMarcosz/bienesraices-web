@@ -1,17 +1,17 @@
 <?php
 require '../../includes/app.php';
+
 use App\Propiedad;
+use Intervention\Image\ImageManagerStatic as Image;
 sesionUsuario();
 $db = conectarDB();
-
 
 //Consulta a la bases de datos
 $consulta = " SELECT * FROM vendedores; ";
 $resultado = mysqli_query($db, $consulta);
 
-//Arreglo que almacenara los errores cometidos por el usuario
-
-$errores = [];
+//Arreglo que almacenara los errores 
+$errores = Propiedad::getErrores();
 
 //Variables que guardaran la información del formulario
 $titulo = "";
@@ -29,79 +29,39 @@ $imagen = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $propiedad = new Propiedad($_POST);
-    $propiedad->guardar();
 
-    $imagen = $_FILES["imagen"];
+    $imagen = $_FILES['imagen'];
+    //Guardamos el tipo
+    $imagenType = $imagen["type"];
+    //Dividimos type en un array para concatenar la extension
+    $extension = explode("/", $imagenType);
+    //Generar un nombre único con su extension
+    $nombreImagen = md5(uniqid(rand(), true)) . "." . $extension[1];
 
-    //Validación del formulario
-    if (!$titulo) {
-        $errores[] = "Debes añadir un titulo";
-    }
- 
-    if (!$precio) {
-        $errores[] = "El precio es obligatorio";
-    }
-
-    if (strlen($descripcion) < 50) {
-        $errores[] = "La descripción es obligatoria  y debe tener mínimo 50 caracteres.";
+    if ($_FILES['imagen']['tmp_name']) {
+        //Realizar rezize a la img con intervention
+        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
+        $propiedad->setImagen($nombreImagen);
     }
 
-    if (!$habitaciones) {
-        $errores[] = "La cantidad de habitaciones es obligatoria";
-    }
 
-    if (!$wc) {
-        $errores[] = "La cantidad de baños es obligatoria";
-    }
+    $errores = $propiedad->validar();
 
-    if (!$estacionamiento) {
-        $errores[] = "La cantidad de estacionamientos es obligatoria";
-    }
-
-    if (!$vendedorId) {
-        $errores[] = "Elige un vendedor";
-    }
-
-    if (!$imagen || $imagen["error"]) {
-        $errores[] = "La imagen es obligatoria";
-    }
-
-    //Validad por tamaño
-    $medida = 1000 * 1000;
-    if ($imagen["size"] > $medida) {
-        $errores[] = "La imagen es muy pesada, debe ser menor a 1MB";
-    }
 
     //Revisar que el arreglo de errores este vació
     if (empty($errores)) {
-        //Subida de archivos
-
-        //Crear carpeta
-        $carpetaImagenes = '../../imagenes/';
-        if (!is_dir($carpetaImagenes)) {
-            mkdir($carpetaImagenes);
-        }
-        //Guardamos el tipo
-        $imagenType = $imagen["type"];
-        //Dividimos type en un array para concatenar la extension
-        $extension = explode("/", $imagenType);
-        //Generar un nombre único con su extension
-        $nombreImagen = md5(uniqid(rand(), true)) . "." . $extension[1];
-
-        //Queries para insertar en la base de datos
-        $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) 
-        values('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId'); ";
-
-        //Capturar errores en caso de que no se inserten los datos
         try {
-            $resultado = mysqli_query($db, $query);
-            //Subir la imagen
-            move_uploaded_file($imagen["tmp_name"], $carpetaImagenes . $nombreImagen);
+            $resultado = $propiedad->guardar();
 
-            //Redireccionar a la pagina principal;
+            if (!is_dir(CARPETA_IMAGENES)) {
+                mkdir(CARPETA_IMAGENES);
+            }
+
+            $image->save(CARPETA_IMAGENES . $nombreImagen);
             header('Location: /admin?resultado=1');
+
         } catch (Throwable $ex) {
-            echo 'Ha ocurrido un problema con la bases de datos, no se pudo insertar los datos. Error : ' . $ex->getMessage() . '<br>' . ' Código de error: ' . $ex->getCode();
+            echo 'No se pudo insertar los datos. Error : ' . $ex->getMessage() . '<br>' . ' Código: ' . $ex->getCode();
             exit;
         }
     }
