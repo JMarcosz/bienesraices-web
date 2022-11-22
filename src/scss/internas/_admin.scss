@@ -13,6 +13,10 @@
     &.exito{
         background-color: $verde;
     }
+    &.advertencia{
+        background-color: $amarillo-claro;
+        width: 100%;
+    }
 }
 
 table.propiedades{

@@ -3,6 +3,11 @@
     @include grid(3, 2rem);
   }
 }
+.contenedor-advertencia{
+    display: flex;
+    height: 10rem;
+    align-items: center;
+}
 
 .anuncio{
     min-height: 60rem;
