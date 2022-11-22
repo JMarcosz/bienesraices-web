@@ -5,7 +5,7 @@ function conectarDB()
     $db = '';
     $host = 'localhost';
     $user = 'root';
-    $password = 'root';
+    $password = '';
     $dbConect = 'bienesraices_crud';
     try {
         $db = new mysqli($host, $user, $password, $dbConect);
