@@ -42,18 +42,19 @@ incluirTemplate('header', true);
   </div>
 </main>
 
-<section class="seccion contenedor"> <!-- Anuncios -->
-  
+<section class="seccion contenedor">
+  <!-- Anuncios -->
+
 
   <?php
   $limite = 3;
   include "includes/templates/anuncios.php";
   ?>
-  <?php if($resultado->num_rows): ?>
-  <div class="alinear-derecha">
-    <a href="anuncios.php" class="boton-verde">Ver Todas</a>
-  </div>
-  <?php endif ?> 
+  <?php if ($resultado->num_rows) : ?>
+    <div class="alinear-derecha">
+      <a href="anuncios.php" class="boton-verde">Ver Todas</a>
+    </div>
+  <?php endif ?>
 </section> <!-- Fin anuncios -->
 
 

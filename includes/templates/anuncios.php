@@ -6,13 +6,13 @@ $resultado = mysqli_query($db, $query);
 ?>
 
 <h2>Casas y Depas en Venta</h2>
-<?php if(!$resultado->num_rows): ?>
+<?php if (!$resultado->num_rows) : ?>
   <div class="contenedor-advertencia">
-  <p class="alerta advertencia">No hay anuncios disponibles en este momento</p>
+    <p class="alerta advertencia">No hay anuncios disponibles en este momento</p>
   </div>
 
 <?php endif ?>
-  
+
 
 <div class="contenedor-anuncios">
   <?php while ($propiedad = mysqli_fetch_assoc($resultado)) : ?>
