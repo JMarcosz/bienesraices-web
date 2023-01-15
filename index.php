@@ -4,7 +4,7 @@ incluirTemplate('header', true);
 ?>
 
 <main class="contenedor seccion">
-  <h1>Más Sobre Nosotros</h1>
+  <h1>Más Sobre Nosotros Modificado</h1>
 
   <div class="iconos-nosotros">
     <div class="icono">
